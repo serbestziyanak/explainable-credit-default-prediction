@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "Explainable Machine Learning for Credit Default Prediction: A Joint Evaluation of Discrimination, Calibration, Cost, and Explanation Reliability"
+type: software
+version: 1.0.0
+date-released: 2026-09-28
+
+authors:
+  - family-names: Ziyanak
+    given-names: Serbest
+
+repository-code: "https://github.com/serbestziyanak/explainable-credit-default-prediction"
+license: MIT
