@@ -2,7 +2,7 @@
 
 **Reproducible analysis of discrimination, probability calibration, classification costs, and explanation reliability.**
 
-This repository contains the Python notebook accompanying the article **“Kredi Temerrüt Tahmininde Açıklanabilir Makine Öğrenmesi: Ayrım Gücü, Kalibrasyon, Maliyet ve Açıklama Güvenilirliğinin Birlikte Değerlendirilmesi”** (*Explainable Machine Learning for Credit Default Prediction: A Joint Evaluation of Discrimination, Calibration, Cost, and Explanation Reliability*).
+This repository contains the Python notebook accompanying the article **“Explainable Machine Learning for Credit Default Prediction: A Joint Evaluation of Discrimination, Calibration, Cost, and Explanation Reliability”** (*Kredi Temerrüt Tahmininde Açıklanabilir Makine Öğrenmesi: Ayrım Gücü, Kalibrasyon, Maliyet ve Açıklama Güvenilirliğinin Birlikte Değerlendirilmesi*).
 
 The study compares Logistic Regression, Random Forest, and XGBoost on the UCI **Default of Credit Card Clients** dataset. Its purpose is to show how the preferred model changes with the evaluation objective and with post-hoc probability calibration.
 
