@@ -10,7 +10,7 @@ The study compares Logistic Regression, Random Forest, and XGBoost on the UCI **
 
 | File | Description |
 | --- | --- |
-| [`makale_kredi_hakem_revizyonu.ipynb`](makale_kredi_hakem_revizyonu.ipynb) | Complete analysis, including the reviewer-requested calibration and explanation analyses. |
+| [`explainable_credit_default_prediction.ipynb`](explainable_credit_default_prediction.ipynb) | Complete analysis, including the reviewer-requested calibration and explanation analyses. |
 | [`LICENSE`](LICENSE) | MIT license for the code and repository documentation. |
 
 The notebook writes result tables as `Table_*.csv` and figures as `Figure_*.png` to its working directory. These files can be regenerated from the notebook.
@@ -23,7 +23,7 @@ The data are **not included** in this repository. Internet access is required wh
 
 ## Run in Google Colab
 
-1. Open [`makale_kredi_hakem_revizyonu.ipynb`](makale_kredi_hakem_revizyonu.ipynb) in Google Colab.
+1. Open [`explainable_credit_default_prediction.ipynb`](explainable_credit_default_prediction.ipynb) in Google Colab.
 2. Select **Runtime → Run all**. The first cell installs `ucimlrepo`, `xgboost`, `shap`, `lime`, and `openpyxl`. The notebook also uses NumPy, pandas, Matplotlib, SciPy, and scikit-learn.
 3. Wait for every cell to finish and check for errors. Hyperparameter search and repeated LIME explanations may take time.
 4. Save the executed notebook if the cell outputs should remain visible. Download generated CSV and PNG files from the Colab **Files** panel before the session ends; its working directory is temporary.
