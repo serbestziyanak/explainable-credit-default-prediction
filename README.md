@@ -126,11 +126,19 @@ For an inventory of each archive's contents, see [`results/README.md`](results/R
 
 ## Citation and DOI
 
-The repository includes [`CITATION.cff`](CITATION.cff) for GitHub's *Cite this repository* feature and Zenodo's release metadata ingestion. **No new DOI is asserted here:** the DOI must be issued only after this exact code/results release is archived.
+[![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23311944.svg)](https://doi.org/10.5281/zenodo.23311944)
 
-The previous code deposit **[10.5281/zenodo.23010902](https://doi.org/10.5281/zenodo.23010902)** pertains to an **earlier** version; do not cite it as the archive of the newly added two-dataset, calibration, XAI, or LIME-fidelity experiments.
+**Version-specific archived release DOI:** [10.5281/zenodo.23311944](https://doi.org/10.5281/zenodo.23311944)  
+**GitHub repository:** https://github.com/serbestziyanak/explainable-credit-default-prediction  
+**Software version described by this repository:** `v2.0.0`
 
-If continuing the existing GitHub/Zenodo record, publish a new GitHub Release (proposed tag: `v2.0.0`) with the connected Zenodo repository, then cite the **new version-specific DOI** shown by Zenodo. Update the manuscript's *Data and Code Availability* statement accordingly. See the [Turkish publication guide](docs/GITHUB_ZENODO_KILAVUZU_TR.md).
+The Zenodo DOI above was supplied by the author for the released code and results. See [`CITATION.cff`](CITATION.cff) for machine-readable citation information. The earlier DOI [10.5281/zenodo.23010902](https://doi.org/10.5281/zenodo.23010902) identifies an earlier deposit and should **not** be cited for the two-dataset, calibration, XAI, and LIME-fidelity experiments described here.
+
+### Suggested software citation
+
+> Ziyanak, S. (2026). *Decision-aware and explainable machine learning for credit risk prediction: Reproducible experiments* (Version 2.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23311944
+
+**Archived releases are immutable.** Updating this GitHub README or `CITATION.cff` *after* the GitHub release was published does not retroactively alter its associated Zenodo snapshot. Check the record's file list and version before using the DOI in a submission. For an additional archived update, publish a separate new version only if the contents or metadata need to change.
 
 ## Authorship and licensing
 
