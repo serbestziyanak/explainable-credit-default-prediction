@@ -6,7 +6,7 @@ authors:
   - family-names: Ziyanak
     given-names: Serbest
 version: 2.0.0
-doi: "10.5281/zenodo.23311944"
+doi: ""
 repository-code: "https://github.com/serbestziyanak/explainable-credit-default-prediction"
 url: "https://github.com/serbestziyanak/explainable-credit-default-prediction"
 abstract: "Code and PAPER-mode results for two credit risk datasets, including class weighting, probability calibration, asymmetric threshold costs, probability-scale SHAP–LIME comparison, and independent-neighborhood LIME fidelity analyses."
