@@ -125,9 +125,9 @@ For an inventory of each archive's contents, see [`results/README.md`](results/R
 
 ## Citation and DOI
 
-[![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23311944.svg)](https://doi.org/10.5281/zenodo.23311944)
+[![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23312634.svg)](https://doi.org/10.5281/zenodo.23312634)
 
-**Version-specific archived release DOI:** [10.5281/zenodo.23311944](https://doi.org/10.5281/zenodo.23311944)  
+**Version-specific archived release DOI:** [10.5281/zenodo.23312634](https://doi.org/10.5281/zenodo.23312634)  
 **GitHub repository:** https://github.com/serbestziyanak/explainable-credit-default-prediction  
 **Software version described by this repository:** `v2.0.0`
 
@@ -135,7 +135,7 @@ The Zenodo DOI above was supplied by the author for the released code and result
 
 ### Suggested software citation
 
-> Ziyanak, S. (2026). *Decision-aware and explainable machine learning for credit risk prediction: Reproducible experiments* (Version 2.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23311944
+> Ziyanak, S. (2026). *Decision-aware and explainable machine learning for credit risk prediction: Reproducible experiments* (Version 2.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23312634
 
 **Archived releases are immutable.** Updating this GitHub README or `CITATION.cff` *after* the GitHub release was published does not retroactively alter its associated Zenodo snapshot. Check the record's file list and version before using the DOI in a submission. For an additional archived update, publish a separate new version only if the contents or metadata need to change.
 
