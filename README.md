@@ -4,7 +4,7 @@
 
 > **Beyond Discrimination: Interactions of Class Weighting, Probability Calibration, Decision Costs, and Local Explanation Reliability in Credit Risk Prediction**
 
-[Repository](https://github.com/serbestziyanak/explainable-credit-default-prediction) · [Instructions in Turkish](docs/GITHUB_ZENODO_KILAVUZU_TR.md) · [Results documentation](results/README.md)
+[Repository](https://github.com/serbestziyanak/explainable-credit-default-prediction) · [Results documentation](results/README.md)
 
 ## Overview
 
