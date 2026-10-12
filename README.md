@@ -1,462 +1,139 @@
-# Explainable Machine Learning for Credit Card Default Prediction
+# Decision-Aware and Explainable Machine Learning for Credit Risk Prediction
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23010902.svg)](https://doi.org/10.5281/zenodo.23010902)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+**Reproducible code, cross-validated predictions, and explainability robustness results** accompanying the manuscript:
 
-Reproducible machine-learning analysis of discrimination, probability calibration, decision costs, and explanation reliability in credit default prediction.
+> **Beyond Discrimination: Interactions of Class Weighting, Probability Calibration, Decision Costs, and Local Explanation Reliability in Credit Risk Prediction**
 
-This repository contains the complete Python/Google Colab notebook accompanying the study:
+[Repository](https://github.com/serbestziyanak/explainable-credit-default-prediction) · [Instructions in Turkish](docs/GITHUB_ZENODO_KILAVUZU_TR.md) · [Results documentation](results/README.md)
 
-> **Explainable Machine Learning for Credit Default Prediction: A Joint Evaluation of Discrimination, Calibration, Cost, and Explanation Reliability**
+## Overview
 
-The study compares Logistic Regression, Random Forest, and XGBoost using the UCI *Default of Credit Card Clients* dataset. The analysis evaluates not only predictive discrimination, but also probability calibration, cost-sensitive decision thresholds, and the reliability of post-hoc explanations produced by SHAP and LIME.
+This repository provides the analysis notebooks and the **PAPER-mode output archives** for an empirical, two-dataset study of how predictive discrimination, probability calibration, asymmetric classification costs, and local explanation reliability can yield different model preferences.
 
----
+The analysis is **not** presented as a new classification algorithm or an instance-dependent economic loss estimator. Its contribution is an evaluation protocol that explicitly distinguishes:
 
-## Repository Contents
+1. Class-weighted versus unweighted learning and the effects of sigmoid probability calibration.
+2. ROC-AUC and Brier score from threshold-dependent, asymmetric misclassification losses.
+3. SHAP–LIME explanation agreement from the fidelity and repeatability of local LIME surrogates.
+4. Results from the two historical public credit datasets, without claiming broad contemporary generalization.
 
-| File | Description |
-|---|---|
-| `explainable_credit_default_prediction.ipynb` | Complete reproducible analysis notebook, including model training, evaluation, calibration, cost-sensitive analysis, SHAP, LIME, and explanation-stability experiments |
-| `LICENSE` | MIT License covering the original source code and repository documentation |
-| `README.md` | Repository documentation |
+## Data sources
 
-The notebook automatically generates result tables and figures during execution.
+| Dataset | Source | Observations | Predictor columns | Positive target (1) |
+| --- | --- | ---: | ---: | --- |
+| Default of Credit Card Clients | [UCI ID 350](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients) | 30,000 | 23 | Default next month (6,636 cases; 22.12%) |
+| South German Credit | [UCI ID 573](https://archive.ics.uci.edu/dataset/573/south+german+credit+update) | 1,000 | 20 | Bad credit (300 cases; 30%) |
 
-Generated tables are saved using the pattern:
+South German Credit is downloaded **from the official UCI ZIP** rather than `fetch_ucirepo(id=573)`, which does not support direct import for this dataset. The script maps the original label convention so `1` consistently indicates the higher-risk class.
 
-```text
-Table_*.csv
-```
+The datasets are **not redistributed** in this repository. Notebook execution requires internet access to the original public sources and remains subject to their availability and conditions of use.
 
-Generated figures are saved using the pattern:
-
-```text
-Figure_*.png
-```
-
-These files can be regenerated directly by executing the notebook.
-
----
-
-## Data Source
-
-The analysis uses the **Default of Credit Card Clients** dataset from the UCI Machine Learning Repository.
-
-The notebook retrieves the dataset automatically using:
-
-```python
-fetch_ucirepo(id=350)
-```
-
-Dataset characteristics:
-
-- Number of observations: **30,000**
-- Prediction task: binary classification
-- Target: credit-card default
-- The `ID` variable is excluded from model inputs
-
-The dataset itself is **not included in this repository**.
-
-Internet access is therefore required when the data-loading cell is executed.
-
-Dataset source:
-
-https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients
-
-The UCI dataset is third-party material and is not covered by the MIT License of this repository. Users should consult the UCI Machine Learning Repository for the dataset's citation and usage conditions.
-
----
-
-## Machine Learning Models
-
-The following models are evaluated:
-
-- Logistic Regression
-- Random Forest
-- XGBoost
-
-The models are compared using several complementary evaluation perspectives rather than relying on accuracy alone.
-
----
-
-## Evaluation Metrics
-
-Predictive performance is evaluated using metrics including:
-
-- Accuracy
-- Precision
-- Recall
-- F1-score
-- ROC-AUC
-- Brier score
-- Confusion matrix
-- False-positive rate
-- False-negative rate
-
-The study also examines model behavior under alternative classification thresholds.
-
----
-
-## Cost-Sensitive Evaluation
-
-In addition to conventional predictive-performance metrics, the notebook evaluates models using an assumed classification-error cost function:
+## Repository layout
 
 ```text
-Total Cost = C_FP × FP + C_FN × FN
+explainable-credit-default-prediction/
+├── README.md
+├── CITATION.cff
+├── CHANGELOG.md
+├── requirements.txt
+├── .gitignore
+├── notebooks/
+│   ├── 01_prediction_calibration_cost.ipynb
+│   ├── 02_shap_lime_validation.ipynb
+│   └── 03_lime_fidelity_robustness.ipynb
+├── results/
+│   ├── kredi_ek_deney_sonuclari_paper.zip
+│   ├── kredi_xai_sonuclari_paper.zip
+│   ├── kredi_xai_saglamlik_sonuclari_paper.zip
+│   └── README.md
+├── figures/
+│   ├── fig1_brier.png
+│   ├── fig2_xai.png
+│   └── fig3_robustness.png
+├── environment/
+│   └── recorded_versions.json
+├── scripts/
+│   └── validate_archives.py
+└── docs/
+    └── GITHUB_ZENODO_KILAVUZU_TR.md
 ```
 
-where:
+The three `ipynb` files are the **corrected, experiment-producing versions**. Earlier single-test-split exploratory notebooks are not part of this release and should not be used to recreate the updated paper's tables.
 
-- `C_FP` is the assumed cost of a false positive,
-- `C_FN` is the assumed cost of a false negative,
-- `FP` is the number of false-positive predictions,
-- `FN` is the number of false-negative predictions.
+## Reproduce the analysis on Google Colab
 
-Decision thresholds are optimized using training data rather than fixed exclusively at `0.50`.
+**Run in the order listed.** The paper's reported statistics use `MODE = 'PAPER'`; `FAST` is solely a debugging smoke test.
 
-Multiple false-negative/false-positive cost ratios are examined to determine how operational assumptions affect model selection and threshold choice.
+1. **Prediction, calibration, and costs:** Open [`notebooks/01_prediction_calibration_cost.ipynb`](notebooks/01_prediction_calibration_cost.ipynb) in Google Colab. In the settings cell change `MODE = 'FAST'` to `MODE = 'PAPER'` and run all cells. The expected downloadable file is `kredi_ek_deney_sonuclari_paper.zip`. This step uses a five-fold stratified *outer* evaluation and three-fold *inner* hyperparameter search, comparing logistic regression, Random Forest, and weighted/unweighted tree ensembles.
+2. **Explainability validation:** Open [`notebooks/02_shap_lime_validation.ipynb`](notebooks/02_shap_lime_validation.ipynb); set `MODE = 'PAPER'` and upload the **first** PAPER ZIP when prompted. It refits matching outer-fold XGBoost models and validates that their predictions reproduce the previously stored probabilities. It then computes probability-scale SHAP–LIME agreement and LIME seed stability. Expected output: `kredi_xai_sonuclari_paper.zip`.
+3. **LIME fidelity and robustness:** Open [`notebooks/03_lime_fidelity_robustness.ipynb`](notebooks/03_lime_fidelity_robustness.ipynb); set `MODE = 'PAPER'`, and upload **both earlier PAPER ZIPs** when prompted. This tests LIME discretization and kernel width, in-sample and held-out-neighborhood weighted \(R^2\), sample sensitivity, and seed stability. Expected output: `kredi_xai_saglamlik_sonuclari_paper.zip`.
 
----
+The existing results archives in [`results/`](results/) contain the **actual completed PAPER-mode outputs**, so it is not necessary to rerun computationally intensive cells merely to inspect or validate the published data tables. For Colab, upload input ZIPs into `/content/` or use the notebooks' file-picker dialog.
 
-## Probability Calibration
+### Running locally (optional)
 
-Probability calibration is evaluated for Random Forest and XGBoost.
+The experiments were conducted in Python 3.13.16 with the principal package versions recorded in [`environment/recorded_versions.json`](environment/recorded_versions.json). For a compatible local environment:
 
-The notebook compares:
-
-- raw model probabilities,
-- sigmoid calibration,
-- isotonic calibration.
-
-Calibration methods are selected using training data and evaluated on the independent test set.
-
-The analysis includes:
-
-- Brier scores,
-- ROC-AUC values,
-- calibration curves,
-- cost-sensitive thresholds after calibration.
-
-This allows the study to distinguish between:
-
-1. ranking ability,
-2. probability quality,
-3. decision usefulness.
-
----
-
-## Explainable Artificial Intelligence
-
-Two post-hoc explanation methods are used:
-
-### SHAP
-
-SHAP is used to quantify feature contributions based on Shapley-value principles.
-
-The notebook includes analyses of:
-
-- global feature importance,
-- local explanations,
-- feature rankings,
-- explanation direction.
-
-### LIME
-
-LIME is used to generate local surrogate explanations for individual predictions.
-
-The notebook evaluates:
-
-- local feature importance,
-- feature rankings,
-- explanation direction,
-- explanation stability across repeated runs.
-
----
-
-## SHAP–LIME Agreement
-
-The study goes beyond displaying SHAP and LIME visualizations and quantitatively investigates agreement between the two explanation techniques.
-
-The notebook evaluates:
-
-- top-feature overlap,
-- Jaccard similarity,
-- full-feature rank agreement,
-- Spearman rank correlation,
-- directional agreement for shared important features.
-
-This analysis helps assess whether different explanation methods provide consistent interpretations of the same prediction.
-
----
-
-## LIME Stability Analysis
-
-Because LIME contains stochastic components, explanation stability is explicitly evaluated.
-
-Selected observations are repeatedly explained using different random seeds.
-
-The analysis examines:
-
-- feature-set stability,
-- ranking stability,
-- directional stability,
-- variation across repeated explanations.
-
-The main experiments include repeated LIME explanations across **30 random seeds for 10 selected observations**.
-
----
-
-## Analysis Workflow
-
-The main experimental workflow is:
-
-1. Retrieve the UCI dataset.
-2. Remove the `ID` variable from model inputs.
-3. Split the data using a stratified:
-   - 80% training set
-   - 20% independent test set
-4. Perform hyperparameter optimization using five-fold stratified cross-validation.
-5. Optimize models using ROC-AUC.
-6. Generate out-of-fold training predictions.
-7. Determine F1-optimal classification thresholds.
-8. Determine cost-sensitive optimal thresholds.
-9. Evaluate the final models on the independent test set.
-10. Compare ROC-AUC and Brier scores.
-11. Evaluate alternative cost assumptions.
-12. Apply probability calibration to Random Forest and XGBoost.
-13. Recalculate optimal thresholds after calibration.
-14. Generate SHAP explanations.
-15. Generate LIME explanations.
-16. Measure SHAP–LIME agreement.
-17. Analyze LIME explanation stability.
-18. Perform descriptive subgroup error analysis.
-
-The test set is not used for hyperparameter selection, calibration-method selection, or decision-threshold optimization.
-
----
-
-## Main Generated Outputs
-
-Important reviewer-revision outputs include:
-
-| Output | Description |
-|---|---|
-| `Table_Calibration_Review.csv` | Selected calibration method and raw/calibrated test-set Brier score and ROC-AUC |
-| `Table_Calibration_Cost_Review.csv` | Raw/calibrated thresholds and test costs under alternative false-negative/false-positive cost ratios |
-| `Table_Explanation_Rank_Direction_Review.csv` | Top-feature overlap, full-feature rank agreement, and directional agreement |
-| `Table_LIME_Rank_Stability_Review.csv` | LIME rank and direction stability across repeated random seeds |
-| `Figure_Calibration_Curves.png` | Calibration curves for the evaluated model probabilities |
-
-Additional tables and figures are generated throughout the notebook.
-
----
-
-## Running the Analysis in Google Colab
-
-The easiest way to reproduce the analysis is with Google Colab.
-
-### Step 1
-
-Open:
-
-```text
-explainable_credit_default_prediction.ipynb
+```bash
+python -m venv .venv
+# Linux/macOS: source .venv/bin/activate
+# Windows (cmd.exe): .venv\Scripts\activate
+python -m pip install -r requirements.txt
+python -m pip install jupyterlab
+jupyter lab
 ```
 
-in Google Colab.
+The notebooks were designed primarily for **Colab**: `%pip` cells install packages independently; file upload/download widgets rely on Colab when the expected ZIPs are not already present. Local execution may require adapting the two input ZIP paths to your local filesystem. Python and package versions, particularly SHAP and scikit-learn, can affect exact output consistency.
 
-### Step 2
+## Check released results without retraining
 
-Select:
+From the repository root:
 
-```text
-Runtime → Run all
+```bash
+python scripts/validate_archives.py
 ```
 
-### Step 3
+This checks the three ZIP archives, study manifests, required output tables, expected PAPER-mode study sizes, and the XAI model-prediction reproduction tolerances. **This is an archive-integrity/schema check, not a claim that training has been rerun in this environment.**
 
-The first cells install the required additional packages, including:
+## Selected illustrative findings
 
-```text
-ucimlrepo
-xgboost
-shap
-lime
-openpyxl
-```
+For the Taiwan credit-default dataset, the pooled outer-fold results include:
 
-The notebook also uses:
+| Model / probabilities | ROC-AUC | Brier score |
+| --- | ---: | ---: |
+| Unweighted XGBoost, raw | 0.7838 | 0.1337 |
+| Unweighted XGBoost, sigmoid-calibrated | 0.7838 | 0.1346 |
+| Weighted XGBoost, raw | 0.7831 | 0.1788 |
+| Weighted XGBoost, sigmoid-calibrated | 0.7831 | 0.1341 |
 
-- NumPy
-- pandas
-- Matplotlib
-- SciPy
-- scikit-learn
+The extended LIME experiment also showed that for **weighted XGBoost on Taiwan** the held-out-neighborhood weighted \(R^2\) increased from **0.187 to 0.455** for raw probabilities when continuous variables were left *undiscretized*, while top-five SHAP–LIME Jaccard agreement decreased from **0.548 to 0.351**. Thus fidelity and inter-method agreement should not be treated as interchangeable measures of explanation quality.
 
-### Step 4
+These are **descriptive results in the stated experimental protocol**, not universal causal statements. Confidence intervals based on resampling fixed out-of-fold predictions do **not** incorporate model-retraining variability.
 
-Allow all cells to finish execution.
+## Statistical and interpretive limitations
 
-Hyperparameter optimization and repeated LIME explanation experiments can require more computation than the standard model-evaluation sections.
+- Both datasets are historical; the smaller German dataset contains only 1,000 records. Cross-dataset differences alone cannot establish generalization to current lending portfolios.
+- Misclassification costs are **fixed hypothetical ratios** (`C_FP = 1`, `C_FN = 1, 2, 3, 5, or 10`); they are not measured currency-denominated losses, nor EAD/LGD-based customer-level costs.
+- The SHAP–LIME experiments examine selected, stratified test cases and specific perturbation/background assumptions. Local surrogate fidelity is evaluated on independent synthetic neighborhood samples, *not* on independent real-world borrowers.
+- Pooled cross-validation comparisons and paired bootstrap intervals are conditional on the fitted outer-fold models and sampling choices.
+- The experiments do not establish non-discrimination, deployability, or model fairness.
 
-### Step 5
+## Figures and released outputs
 
-Generated CSV and PNG files can be downloaded from the Colab Files panel.
+The `figures/` directory contains the **manuscript figure images**. Raw output tables and processing metadata are stored in the three result ZIPs. The figures are supplied as final visual assets; there is no claim that a figure-generation script is included in this release.
 
-Because the Colab working directory is temporary, generated files should be downloaded before the runtime session is terminated.
+For an inventory of each archive's contents, see [`results/README.md`](results/README.md).
 
----
+## Citation and DOI
 
-## Reproducibility
+The repository includes [`CITATION.cff`](CITATION.cff) for GitHub's *Cite this repository* feature and Zenodo's release metadata ingestion. **No new DOI is asserted here:** the DOI must be issued only after this exact code/results release is archived.
 
-The main random seed used in the analysis is:
+The previous code deposit **[10.5281/zenodo.23010902](https://doi.org/10.5281/zenodo.23010902)** pertains to an **earlier** version; do not cite it as the archive of the newly added two-dataset, calibration, XAI, or LIME-fidelity experiments.
 
-```python
-random_state = 42
-```
+If continuing the existing GitHub/Zenodo record, publish a new GitHub Release (proposed tag: `v2.0.0`) with the connected Zenodo repository, then cite the **new version-specific DOI** shown by Zenodo. Update the manuscript's *Data and Code Availability* statement accordingly. See the [Turkish publication guide](docs/GITHUB_ZENODO_KILAVUZU_TR.md).
 
-However, exact numerical results may vary slightly depending on:
+## Authorship and licensing
 
-- package versions,
-- execution environment,
-- XGBoost implementation differences,
-- stochastic behavior in LIME.
+Code/analysis attribution in this release: **Serbest Ziyanak**. Review and update `CITATION.cff` if the final code has additional contributors. **No software license is declared in this archive** because the rights-holder has not yet selected one. Before public release, explicitly choose a license (e.g., MIT if appropriate) or intentionally retain all rights. Do not assume publicly readable code is automatically open-source licensed.
 
-The notebook was developed and tested using Google Colab.
-
-Dependency versions are not currently pinned to a fixed environment.
-
----
-
-## Interpretation and Limitations
-
-Several methodological considerations should be kept in mind when interpreting the results.
-
-### Hyperparameter tuning
-
-Hyperparameters are selected using the complete training set before some out-of-fold predictions are generated.
-
-Therefore, the procedure should not be interpreted as fully nested cross-validation.
-
-The independent test set is not used for hyperparameter selection.
-
-### Cost analysis
-
-The cost function:
-
-```text
-C_FP × FP + C_FN × FN
-```
-
-uses assumed constant error costs.
-
-It should not be interpreted as an estimate of actual monetary credit losses based on quantities such as:
-
-- exposure at default,
-- loss given default,
-- outstanding balance,
-- customer-level financial impact.
-
-### Brier score
-
-The Brier score measures overall squared probability error.
-
-It reflects probability quality but should not be interpreted as a pure measure of calibration alone.
-
-### SHAP and LIME
-
-SHAP and LIME operate using different explanation mechanisms and output scales.
-
-Their raw contribution magnitudes should therefore not be compared directly.
-
-Directional agreement analyses are performed only for features appearing in both relevant explanation sets.
-
-### External validity
-
-The study uses a single publicly available credit-card dataset.
-
-The results have not been externally validated using an independent financial-institution portfolio.
-
----
-
-## Citation
-
-If you use this code, notebook, or methodology in academic work, please cite the archived Zenodo release.
-
-### Zenodo DOI
-
-**https://doi.org/10.5281/zenodo.23010902**
-
-Suggested citation:
-
-> Ziyanak, S. (2026). *Explainable Machine Learning for Credit Card Default Prediction: A Joint Evaluation of Discrimination, Calibration, Cost, and Explanation Reliability* (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23010902
-
-### BibTeX
-
-```bibtex
-@software{ziyanak_2026_credit_default,
-  author    = {Ziyanak, Serbest},
-  title     = {Explainable Machine Learning for Credit Card Default Prediction: A Joint Evaluation of Discrimination, Calibration, Cost, and Explanation Reliability},
-  year      = {2026},
-  version   = {1.0.0},
-  publisher = {Zenodo},
-  doi       = {10.5281/zenodo.23010902},
-  url       = {https://doi.org/10.5281/zenodo.23010902}
-}
-```
-
----
-
-## Code Availability
-
-The complete analysis code is publicly available through both GitHub and Zenodo.
-
-**GitHub**
-
-https://github.com/serbestziyanak/explainable-credit-default-prediction
-
-**Permanent Zenodo archive**
-
-https://doi.org/10.5281/zenodo.23010902
-
-For reproducibility, researchers are encouraged to cite and use the archived Zenodo release corresponding to the version used in the study rather than relying exclusively on the continuously updated GitHub default branch.
-
----
-
-## License
-
-The original source code and repository documentation are distributed under the **MIT License**.
-
-See:
-
-```text
-LICENSE
-```
-
-for details.
-
-The license does not apply to:
-
-- the UCI dataset,
-- third-party Python libraries,
-- other externally licensed resources.
-
-These materials retain their respective licenses and usage conditions.
-
----
-
-## Author
-
-**Serbest Ziyanak**
-
-GitHub:  
-https://github.com/serbestziyanak
-
----
-
-## Permanent Archive
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23010902.svg)](https://doi.org/10.5281/zenodo.23010902)
-
-**DOI:** https://doi.org/10.5281/zenodo.23010902
+If submitting the paper to a double-anonymous journal, check that journal's code-sharing and author-identification policy before providing an identifying public repository URL in the blinded manuscript.

@@ -1,0 +1,25 @@
+{
+  "recorded_main_run": {
+    "python": "3.13.16",
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "sklearn": "1.6.1",
+    "xgboost": "3.4.1",
+    "scipy": "1.16.3"
+  },
+  "recorded_robustness_run": {
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "sklearn": "1.6.1",
+    "shap": "0.53.0",
+    "xgboost": "3.4.1",
+    "lime": "0.2.0.1"
+  },
+  "source": "User-supplied completed PAPER-mode manifests; see the three ZIP archives",
+  "unknown_versions": [
+    "ucimlrepo",
+    "requests",
+    "openpyxl",
+    "matplotlib"
+  ]
+}

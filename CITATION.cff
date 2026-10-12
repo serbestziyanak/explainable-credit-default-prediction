@@ -1,13 +1,19 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it using the metadata below."
-title: "Explainable Machine Learning for Credit Default Prediction: A Joint Evaluation of Discrimination, Calibration, Cost, and Explanation Reliability"
+message: "If you use this software or its results, please cite the archived release and its version-specific DOI."
 type: software
-version: 1.0.0
-date-released: 2026-09-28
-
+title: "Decision-Aware and Explainable Machine Learning for Credit Risk Prediction: Reproducible Experiments"
 authors:
   - family-names: Ziyanak
     given-names: Serbest
-
+version: 2.0.0
 repository-code: "https://github.com/serbestziyanak/explainable-credit-default-prediction"
-license: MIT
+url: "https://github.com/serbestziyanak/explainable-credit-default-prediction"
+abstract: "Code and PAPER-mode results for two credit risk datasets, including class weighting, probability calibration, asymmetric threshold costs, probability-scale SHAP–LIME comparison, and independent-neighborhood LIME fidelity analyses."
+keywords:
+  - machine learning
+  - credit risk
+  - probability calibration
+  - cost-sensitive evaluation
+  - explainable artificial intelligence
+  - SHAP
+  - LIME
