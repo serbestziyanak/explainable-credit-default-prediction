@@ -54,8 +54,7 @@ explainable-credit-default-prediction/
 │   └── recorded_versions.json
 ├── scripts/
 │   └── validate_archives.py
-└── docs/
-    └── GITHUB_ZENODO_KILAVUZU_TR.md
+
 ```
 
 The three `ipynb` files are the **corrected, experiment-producing versions**. Earlier single-test-split exploratory notebooks are not part of this release and should not be used to recreate the updated paper's tables.
